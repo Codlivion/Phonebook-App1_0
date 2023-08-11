@@ -31,12 +31,15 @@ namespace Phonebook_App1_0
                 { fName10, lName10, info10, phone10, email10, editButton10 }
             };
 
-            GetDatabase();
+            GetData();
             ShowPersons(pageNum = 0);
             ShowPageControls();
         }
 
-        private void GetDatabase()
+        /// <summary>
+        /// Gets all from the Person table in the Database into the allPerson List.
+        /// </summary>
+        private void GetData()
         {
             allPerson.Clear();
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -62,7 +65,10 @@ namespace Phonebook_App1_0
             }
         }
 
-        private void SetDatabase()
+        /// <summary>
+        /// Updates Person table in the Database with allPerson List.
+        /// </summary>
+        private void SetData()
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -92,6 +98,10 @@ namespace Phonebook_App1_0
             }
         }
 
+        /// <summary>
+        /// Puts Persons from allPerson List 10 by 10 into the controlGrid.
+        /// </summary>
+        /// <param name="page">Represents the page.</param>
         private void ShowPersons(int page)
         {
             for (int i = 0; i < 10; i++)
@@ -119,6 +129,10 @@ namespace Phonebook_App1_0
             }
         }
 
+        /// <summary>
+        /// Adds new Person to the allPerson List.
+        /// </summary>
+        /// <param name="person">Person object.</param>
         public void AddToList(Person person)
         {
             allPerson.Add(person);
@@ -126,6 +140,11 @@ namespace Phonebook_App1_0
             ShowPageControls();
         }
 
+        /// <summary>
+        /// Updates the Person with specified id in allPerson List.
+        /// </summary>
+        /// <param name="person">Updated object.</param>
+        /// <param name="id">ID of the Person to be updated.</param>
         public void UpdateInList(Person person, int id)
         {
             allPerson[id] = person;
@@ -133,6 +152,10 @@ namespace Phonebook_App1_0
             ShowPageControls();
         }
 
+        /// <summary>
+        /// Removes Person from allPerson.
+        /// </summary>
+        /// <param name="id">ID of the Person to be removed.</param>
         public void DeleteFromList(int id)
         {
             allPerson.Remove(allPerson[id]);
@@ -142,7 +165,7 @@ namespace Phonebook_App1_0
 
         private void saveButton_Click(object sender, EventArgs e)
         {
-            SetDatabase();
+            SetData();
         }
 
         private void entryButton_Click(object sender, EventArgs e)
@@ -176,6 +199,9 @@ namespace Phonebook_App1_0
             ShowPageControls();
         }
 
+        /// <summary>
+        /// Shows and Hides the Back and Next buttons to switch pages properly.
+        /// </summary>
         private void ShowPageControls()
         {
             int pages = allPerson.Count / 10;
@@ -189,6 +215,9 @@ namespace Phonebook_App1_0
         }
     }
 
+    /// <summary>
+    /// Person object.
+    /// </summary>
     public class Person
     {
         public string FirstName { get; set; }

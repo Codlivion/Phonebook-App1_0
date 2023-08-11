@@ -13,14 +13,23 @@ namespace Phonebook_App1_0
 {
     public partial class InputForm : Form
     {
-        public MainForm mainForm;
+        public MainForm mainForm; //MainForm instance
         bool editMode;
         int editNum;
+
+        /// <summary>
+        /// Used to add new Person when called parameterless.
+        /// </summary>
         public InputForm()
         {
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Used to show and edit Person when called with a Person object and it's index in the allPerson List.
+        /// </summary>
+        /// <param name="person"></param>
+        /// <param name="i"></param>
         public InputForm(Person person, int i)
         {
             InitializeComponent();
@@ -40,9 +49,18 @@ namespace Phonebook_App1_0
 
         private void addButton_Click(object sender, EventArgs e)
         {
-            if (String.IsNullOrEmpty(fnameBox.Text) || phoneBox.Text.Length < 14)
+            //Check if phone number provided has empty spaces
+            string phoneTrimmed = string.Empty;
+            char[] phoneChars = phoneBox.Text.ToCharArray();
+            for (int i = 0; i < phoneBox.Text.Length; i++)
             {
-                MessageBox.Show("Missing Parameters. First Name and Phone Number are required");
+                if (!Char.IsWhiteSpace(phoneChars[i])) phoneTrimmed += phoneChars[i];
+            }
+
+            if (String.IsNullOrEmpty(fnameBox.Text) || phoneTrimmed.Length != 13)
+            {
+                string message = String.IsNullOrEmpty(fnameBox.Text) ? "First Name Required!" : phoneTrimmed.Length != 13 ? "Invalid Phone Number!" : "Error!";
+                MessageBox.Show(message);
                 return;
             }
             else
